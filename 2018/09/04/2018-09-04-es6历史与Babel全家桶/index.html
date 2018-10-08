@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="es6,Javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+<meta name="keywords" content="es6,Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6-day1-历史、Babel全家桶">
+<meta property="og:url" content="http://yoursite.com/2018/09/04/2018-09-04-es6历史与Babel全家桶/index.html">
+<meta property="og:site_name" content="童振宇的技术博客">
+<meta property="og:description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-08T13:26:20.259Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6-day1-历史、Babel全家桶">
+<meta name="twitter:description" content="You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/04/2018-09-04-es6历史与Babel全家桶/"/>
+
+
+
+
+
+  <title>es6-day1-历史、Babel全家桶 | 童振宇的技术博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">童振宇的技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/04/2018-09-04-es6历史与Babel全家桶/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zytxh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="童振宇的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">es6-day1-历史、Babel全家桶</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-04T00:00:00+08:00">
+                2018-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>it’s my study blog series for tech share, hoping that it can help me in work.</p>
+<blockquote>
+<p>ECMAscript6 2015年6月发布,可以编写复杂的大型应用程序的企业级开发语言。</p>
+</blockquote>
+<p><br><br><br><br><br><br><br></p>
+<hr>
+<p><br></p>
+<p><strong>1. Javascript 与 ES</strong></p>
+<ul>
+<li><p>1996年11月,Netscape向ECMA提交将Javascript作为一门<code>浏览器脚本语言</code>的提案;</p>
+</li>
+<li><p>1997年Js正式面世,由于java和javascript已经被注册且需要体现ecma的功劳,取名ECMAScript;</p>
+</li>
+</ul>
+<p><br></p>
+<hr>
+<p><br></p>
+<p><strong>2. ES6 与 ES2015</strong></p>
+<ul>
+<li><p>ES从1997年发布ES 1.0至ES 3.0,初学者从3.0开始学;</p>
+</li>
+<li><p>ES 4.0太激进,变化巨大,浏览器厂商特别不满意,联合抵抗;</p>
+</li>
+<li><p>迫于压力发布的ES 3.1改动较小,即是后来的ES5。</p>
+</li>
+<li><p>ES 4.0成为后来的ES6,在2015年6月发布,又叫做ES 2015。</p>
+</li>
+<li><p>ECMA规定每年发布一个版本,现在已经出到ES 2018…  &nbsp; &nbsp; &nbsp; :hugs:</p>
+</li>
+</ul>
+<p><br></p>
+<hr>
+<p><br></p>
+<p><strong>3. 部署:</strong></p>
+<ul>
+<li>浏览器对于ES6的支持已经达到90%<br><a href="http://kangax.github.io/compat-table/es6/" target="_blank" rel="noopener">检查浏览器支持度</a></li>
+</ul>
+<ul>
+<li>node对于ES6的支持度更好,因为node是<code>服务器运行环境(runtime)</code></li>
+</ul>
+<p><br></p>
+<hr>
+<p><br></p>
+<p><strong>4. Babel</strong></p>
+<p><br></p>
+<blockquote>
+<p>babel是一个转码器,其下的多个模块对于转码简直不遗余力(常被用来转码ES6)。下面来讲几个babel全家桶里面的工具或模块,有了它们就可以随便放心的写ES6了:<br><a href="#babelrc">.babelrc</a><br><a href="#工具babel-cli">babel-cli</a></p>
+</blockquote>
+<p><br></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转码前</span></span><br><span class="line">input.map(<span class="function"><span class="params">item</span> =&gt;</span> item + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转码后</span></span><br><span class="line">input.map(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> item + <span class="number">1</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h5 id="babelrc"><a href="#babelrc" class="headerlink" title="babelrc"></a>babelrc</h5><p><br></p>
+<blockquote>
+<p>.babelrc是babel的配置项,规定了babel使用哪种规则进行转码。<code>使用babel必须要配</code>,但是<br>现在可以使用<code>babel-preset-env</code>而无需添加配置项。</p>
+</blockquote>
+<p><br></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"presets"</span>: [</span><br><span class="line">     <span class="string">"latest"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"plugins"</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<hr>
+<p><br></p>
+<h4 id="工具babel-cli"><a href="#工具babel-cli" class="headerlink" title="工具babel-cli"></a>工具babel-cli</h4><blockquote>
+<p>babel-cli自带babel命令用于转码,可以将代码根据.babelrc的配置规则进行转码<br>好处: 手动的去转码</p>
+</blockquote>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install babel-cli -g // 全局安装babel-cli</span><br><span class="line">babel example.js // 转化后的代码标准输出</span><br><span class="line">babel example.js -o result.js // 文件转码到result.js(-o, --out-file)</span><br><span class="line">babel src -d lib // 文件夹转码到目标文件夹(-d, --out-<span class="built_in">dir</span>)</span><br><span class="line">babel src -d lib -s // -s 参数将生成source map文件</span><br></pre></td></tr></table></figure>
+<p><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html" target="_blank" rel="noopener">source map</a></p>
+<blockquote>
+<p>优点: 简单来说,生产环境的代码肯定是编译或者压缩过的,这样线上报错定位不到;可以使用工具产生sourc map文件,它与源文件处在同一个文件夹内,存储着源代码的位置信息,方便错误定位。</p>
+</blockquote>
+<p><br></p>
+<p>这样使用babel-cli的话,转码会依赖全局环境,可以将其放入项目内,通过script跑起来:</p>
+<p>package.json配置一个脚本命令:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",</span><br><span class="line">    "build": "babel babel-cli-test.js -o babel-script-test.js"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>命令行跑起来: :yum:</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<hr>
+<p><br></p>
+<h4 id="babel-node"><a href="#babel-node" class="headerlink" title="babel-node"></a>babel-node</h4><blockquote>
+<p>babel-node是babel-cli中的命令之一,能够产生node的repl交互式运行(read-eval-printf-loop)环境。<br>优点: 应该是类似于node的功能,也可以使用配置package.json和命令行启动的方式来使用。</p>
+</blockquote>
+<p><br><br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ babel-node example.js</span><br></pre></td></tr></table></figure></p>
+<p><br><br><br></p>
+<hr>
+<p><br></p>
+<h4 id="babel-register"><a href="#babel-register" class="headerlink" title="babel-register"></a>babel-register</h4><blockquote>
+<p>babel-register可以对<code>require命令导入的文件</code>进行转码,<code>注意源文件并不会被转码</code><br><br><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 不需要再手动转码啦~~~ */</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">"babel-register"</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"index.js"</span>); <span class="comment">// index.js将会自动被转码</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><br><br>相关阅读:<br><a href="https://www.cnblogs.com/camille666/p/babel.html" target="_blank" rel="noopener">babel那些事</a></p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h4 id="babel-core"><a href="#babel-core" class="headerlink" title="babel-core"></a>babel-core</h4><blockquote>
+<p>引入babel-core就可以使用babel的api啦~</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> es6 = <span class="string">'let a = 1;'</span>;</span><br><span class="line"><span class="keyword">let</span> babel = <span class="built_in">require</span>(<span class="string">"babel-core"</span>);</span><br><span class="line"><span class="keyword">let</span> es5 = babel.transform(es6, &#123;</span><br><span class="line">  presets: [<span class="string">'latest'</span>]</span><br><span class="line">&#125;).code; <span class="comment">// 字符串转码</span></span><br><span class="line"></span><br><span class="line">babel.transformFile(<span class="string">'a.js'</span>, &#123;</span><br><span class="line">  presets: [<span class="string">'latest'</span>]</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;); <span class="comment">// 异步文件转码</span></span><br><span class="line"></span><br><span class="line">babel.transformFileSync(<span class="string">'a.js'</span>, &#123;</span><br><span class="line">  presets: [<span class="string">'latest'</span>]</span><br><span class="line">&#125;); <span class="comment">// 同步文件转码</span></span><br></pre></td></tr></table></figure>
+<p><br></p>
+<hr>
+<p><br></p>
+<h4 id="babel-polyfill"><a href="#babel-polyfill" class="headerlink" title="babel-polyfill"></a>babel-polyfill</h4><blockquote>
+<p>babel默认只能转码新的JS语法(syntax),而无法转码新的API,例如<code>iterator</code>、<code>map</code>等,这是就需要用到babel-polyfill。Babel 默认不转码的 API 非常多，详细清单可以查看babel-plugin-transform-runtime模块的<a href="https://github.com/babel/babel/blob/master/packages/babel-plugin-transform-runtime/src/definitions.js" target="_blank" rel="noopener">definitions.js</a>文件。<br><br><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">"babel-polyfill"</span>);</span><br><span class="line">或者</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"babel-polyfill"</span>);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><br><br><a href="https://github.com/chenxiaochun/blog/issues/37" target="_blank" rel="noopener">polyfill与shim</a></p>
+<blockquote>
+<p>polyfill是浏览器端的shim<br>shim指的是一个库,用旧环境的API实现全新的API<br>polyfill就是一系列的代码或者插件，它为开发者提供的技术特性，都是希望浏览器本就应该原生支持的，并且抹平了 api 之间的使用差异。典型地像检测浏览器是否支持某一个 api，如果不支持就加载一个 polyfill，这样就可以让开发者在任何情况下无缝的使用那些 api 了。</p>
+</blockquote>
+<p><br></p>
+<hr>
+<p><br></p>
+<h4 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h4><blockquote>
+<p>babel其实是可以运行在浏览器环境下的,babel 6.0后虽然不再支持了,但是可以使用<code>babel-standalone</code>来实现浏览器的实时转码(比较消耗性能)<br><br></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</span><br><span class="line"><span class="comment">// Your ES6 code</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p><br></p>
+<p>那么我们怎么高效的实现浏览器端的转码甚至能够加载node模块呢？</p>
+<p><strong><a href="https://zhaoda.net/2015/10/16/browserify-guide/" target="_blank" rel="noopener">通过<code>browserify</code>和babel使浏览器端加载node模块</a></strong></p>
+<blockquote>
+<p>Browerify()是一个供浏览器环境使用的模块打包工具，像在node环境一样，也是通过require(‘modules’)来组织模块之间的引用和依赖，既可以引用npm中的模块，也可以引用自己写的模块，然后打包成js文件，再在页面中通过<script>标签加载。<br><br/></p>
+</blockquote>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm install browserify -g // browserify可以使用命令转化node为浏览器端的es6代码</span><br><span class="line">$ npm install babelify babel-preset-latest -D // babelify转化es6至latest规则下es5代码</span><br><span class="line">$ browserify es6-node.js -o es5-browser.js -t [ balelify --presets [ latest ] ] //  --transform, -t  指定打包过程中使用的转换模块</span><br></pre></td></tr></table></figure>
+<p><br/><br>在package.json中如此配置可以不再写转化模块:<br><br><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"browserify": &#123;</span><br><span class="line">  "transform": [["babelify", &#123; "presets": ["latest"] &#125;]]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p><br/></p>
+<hr>
+</script></p></blockquote>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/es6/" rel="tag"># es6</a>
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/05/2018-09-05-es6-结构/" rel="prev" title="es6-day3-赋值">
+                es6-day3-赋值 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zytxh</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#babelrc"><span class="nav-number">1.</span> <span class="nav-text">babelrc</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工具babel-cli"><span class="nav-number"></span> <span class="nav-text">工具babel-cli</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#babel-node"><span class="nav-number"></span> <span class="nav-text">babel-node</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#babel-register"><span class="nav-number"></span> <span class="nav-text">babel-register</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#babel-core"><span class="nav-number"></span> <span class="nav-text">babel-core</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#babel-polyfill"><span class="nav-number"></span> <span class="nav-text">babel-polyfill</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器"><span class="nav-number"></span> <span class="nav-text">浏览器</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zytxh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
