@@ -289,6 +289,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/09/十月八日/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zytxh">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="童振宇的技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/09/十月八日/" itemprop="url">十月八日</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T07:48:12+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>开发后台管理系统中出现的坑:</p>
+<h2 id="git相关"><a href="#git相关" class="headerlink" title="git相关:"></a>git相关:</h2><h3 id="1-git错误"><a href="#1-git错误" class="headerlink" title="1. git错误"></a>1. git错误</h3><h4 id="错误复现"><a href="#错误复现" class="headerlink" title="错误复现"></a>错误复现</h4><p><img src="https://user-gold-cdn.xitu.io/2018/10/9/166561c405b47c43?w=1210&amp;h=304&amp;f=png&amp;s=83869" alt="git错误"></p>
+<h4 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因:"></a>错误原因:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">本来应该在master或者dev上开发,推送到远程gh-pages分支上（本地不应该有gh-pages）。</span><br><span class="line">但是竟然在gh-pages分支上开发了,</span><br><span class="line">由于推送只推了dist目录下的东西,所以其他的修改在切换分支的时候没有跟踪,</span><br><span class="line">所以切换分支的时候就爆了本地修改的错。</span><br></pre></td></tr></table></figure>
+<h4 id="解决防范"><a href="#解决防范" class="headerlink" title="解决防范:"></a>解决防范:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 通过回退来将修改过的文件复原,来避免这个问题</span><br><span class="line">git reset --hard</span><br></pre></td></tr></table></figure>
+<h3 id="想法"><a href="#想法" class="headerlink" title="想法:"></a>想法:</h3><p>可以写一个关于<code>git错误汇总</code>的文章。</p>
+<h2 id="vue-cli3"><a href="#vue-cli3" class="headerlink" title="vue-cli3"></a>vue-cli3</h2><h3 id="1-configreWebpack"><a href="#1-configreWebpack" class="headerlink" title="1. configreWebpack"></a>1. configreWebpack</h3><h4 id="错误复现-1"><a href="#错误复现-1" class="headerlink" title="错误复现"></a>错误复现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 无法通过点击跳转</span></span><br><span class="line"><span class="keyword">import</span> Sidebar <span class="keyword">from</span> <span class="string">'../components/Sidebar'</span>;</span><br><span class="line"><span class="comment">// 这样可以</span></span><br><span class="line"><span class="keyword">import</span> Sidebar <span class="keyword">from</span> <span class="string">'../components/Sidebar.vue'</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>不带后缀名,vue-cli3默认会查js文件,想要扩展extensions的话,必须修改webpack配置<br>vue-cli3中webpack的配置都在<br>vue.config.js文件下进行<br><a href="https://user-gold-cdn.xitu.io/2018/10/9/166562d2eecd6a1d" target="_blank" rel="noopener">vue-cli3 webpack相关</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 反正我是这么配的</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  baseUrl: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'/vue2-ele-admin/'</span> : <span class="string">'/'</span>,</span><br><span class="line">  configureWebpack: &#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">      extensions: [<span class="string">'.wasm'</span>, <span class="string">'.mjs'</span>, <span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.vue'</span>],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="未解决"><a href="#未解决" class="headerlink" title="未解决"></a>未解决</h4><p><strong>没有起作用，不知道为什么，待研究。</strong></p>
+<h2 id="vscode配置"><a href="#vscode配置" class="headerlink" title="vscode配置"></a>vscode配置</h2><h3 id="1-常规"><a href="#1-常规" class="headerlink" title="1. 常规"></a>1. 常规</h3><ul>
+<li>增加file peek插件,解决引入文件的点击跳转功能</li>
+</ul>
+<p>setting.json中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&quot;file_peek.activeLanguages&quot;: [</span><br><span class="line">  &quot;typescript&quot;,</span><br><span class="line">  &quot;javascript&quot;,</span><br><span class="line">  &quot;python&quot;,</span><br><span class="line">  &quot;vue&quot;,</span><br><span class="line">],</span><br><span class="line">&quot;file_peek.searchFileExtensions&quot;: [</span><br><span class="line">  &quot;.js&quot;,</span><br><span class="line">  &quot;.ts&quot;,</span><br><span class="line">  &quot;.html&quot;,</span><br><span class="line">  &quot;.css&quot;,</span><br><span class="line">  &quot;.scss&quot;,</span><br><span class="line">  &quot;vue&quot;,</span><br><span class="line">],</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>快捷键 command+i 选中当前行</li>
+</ul>
+<h3 id="2-换行缩进"><a href="#2-换行缩进" class="headerlink" title="2. 换行缩进"></a>2. 换行缩进</h3><h4 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h4><p><img src="https://user-gold-cdn.xitu.io/2018/10/9/16656308587aaafc?w=977&amp;h=32&amp;f=png&amp;s=14865" alt="错误"></p>
+<p>想实现这样:</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/9/1665630f84c6f4b5?w=412&amp;h=102&amp;f=png&amp;s=17699" alt="正确"></p>
+<h4 id="原因-1"><a href="#原因-1" class="headerlink" title="原因"></a>原因</h4><p>首先这是标签的属性自动换行缩进的问题，<br>vscode格式化默认会被vetur覆盖，而vetur大部分format都是使用的prettier<br>这也是我们为什么自定义格式化加分号加逗号会在prettier中设置的原因</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;prettier.trailingComma&quot;: &quot;all&quot;, // 逗号</span><br><span class="line">&quot;prettier.singleQuote&quot;: true, // 使用单引号</span><br></pre></td></tr></table></figure>
+<h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p>这里的话我们就要使用这个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Wrap attributes to new lines [auto|force|force-aligned|force-expand-multiline] [&quot;auto&quot;]</span><br><span class="line">&quot;vetur.format.defaultFormatterOptions&quot;: &#123;</span><br><span class="line">    &quot;js-beautify-html&quot;: &#123;</span><br><span class="line">      &quot;wrap_attributes&quot;: &quot;force-aligned&quot; // 可以换成上面任意一种value</span><br><span class="line">     &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-vscode中的npm"><a href="#3-vscode中的npm" class="headerlink" title="3. vscode中的npm"></a>3. vscode中的npm</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>vscode自带终端(command+`)无法使用npm命令,在插件中已经安装了npm</p>
+<h4 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h4><p>复习一下nvm安装node:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvm install [node版本号] // 安装指定版本node</span><br><span class="line">nvm use v x.xx.xx // 使用node</span><br></pre></td></tr></table></figure>
+<p><code>重新安装node后重启vscode</code>，并在终端输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm use --delete-prefix v8.9.1 --silent</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="HEXO-next-配合github搭建个人博客"><a href="#HEXO-next-配合github搭建个人博客" class="headerlink" title="HEXO(next)配合github搭建个人博客"></a>HEXO(next)配合github搭建个人博客</h2><ol>
+<li>安装hexo<br>(<a href="https://github.com/hexojs/hexo" target="_blank" rel="noopener">https://github.com/hexojs/hexo</a>)</li>
+<li>安装next<br>(<a href="https://github.com/iissnan/hexo-theme-next/blob/master/README.cn.md" target="_blank" rel="noopener">https://github.com/iissnan/hexo-theme-next/blob/master/README.cn.md</a>)</li>
+<li>配置next<br>(<a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">http://theme-next.iissnan.com/</a>)</li>
+<li>部署到github<br>（<a href="https://linghucong.js.org/2016/04/15/2016-04-15-hexo-github-pages-blog/）" target="_blank" rel="noopener">https://linghucong.js.org/2016/04/15/2016-04-15-hexo-github-pages-blog/）</a></li>
+<li>链接到github时出现ssh的问题<br>（<a href="https://help.github.com/articles/connecting-to-github-with-ssh/）" target="_blank" rel="noopener">https://help.github.com/articles/connecting-to-github-with-ssh/）</a></li>
+<li>其他<ul>
+<li>写作（<a href="https://hexo.io/zh-cn/docs/writing.html）" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/writing.html）</a></li>
+<li>别人（<a href="https://www.jianshu.com/p/9f0e90cc32c2）" target="_blank" rel="noopener">https://www.jianshu.com/p/9f0e90cc32c2）</a></li>
+<li>github部署项目（<a href="http://gitbeijing.com/pages.html）" target="_blank" rel="noopener">http://gitbeijing.com/pages.html）</a></li>
+<li>vscode中文手册（<a href="https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/）" target="_blank" rel="noopener">https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/）</a></li>
+<li>markdown插入图片方案（<a href="https://www.jianshu.com/p/e9f18be1295d）" target="_blank" rel="noopener">https://www.jianshu.com/p/e9f18be1295d）</a></li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/Hello-Hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -941,7 +1103,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
